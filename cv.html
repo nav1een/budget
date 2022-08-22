@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+    <title>Budget planner</title>
+    <style>
+        *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --green: #43aa8b;
+    --red: #bc4749;
+}
+
+body{
+    background-color: pink;
+    font-family: 'Times New Roman';
+    color: #2f3e46;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3rem;
+}
+
+.budget__numbers{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    max-width: 700px;
+    margin: 1rem 0 3rem;
+}
+
+.number{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.amount__container{
+    display: flex;
+}
+
+#amount__earned,#earned__symbol{color: var(--green);}
+#amount__spent,#spent__symbol{color: var(--red);}
+
+.input__area input{
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    outline: none;
+}
+
+.input__area #description{
+    width: 250px;
+}
+
+.input__area #amount{
+    width: 100px;
+    text-align: center;
+}
+
+/* remove arrows from number input */
+.input__area input::-webkit-outer-spin-button,
+.input__area input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+}
+
+.buttons__area{
+    margin: 10px 0 3rem;
+}
+
+.buttons__area #add__income,
+.buttons__area #add__expense{
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+#add__income{background-color: var(--green);}
+#add__expense{background-color: var(--red);}
+
+.items__container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 70%;
+    max-width: 700px;
+}
+
+#income__container h2{color: var(--black);}
+#expenses__container h2{color: var(--black);}
+
+.items__container .container{
+    width: 49%;
+    border-radius: 15px;
+}
+
+.container .item{
+    width: 100%;
+    background-color: white;
+    border-radius: 15px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 40px 5px 30px;
+    position: relative;
+}
+
+.item__income,
+.item__expense{
+    display: flex;
+}
+
+.income span, .income p{color: var(--green);}
+.expense span, .expense p{color: var(--red);}
+
+.item .far{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: var(--red);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    cursor: pointer;
+    transform: translateX(30px);
+    opacity: 0;
+}
+
+.item:hover .far{
+    animation: showDelete;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes showDelete{
+    0%{
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> Budget planner</h1>
+        <div class="budget__numbers">
+            <div id="earned" class="number">
+                <small>Money Earned</small>
+                <div class="amount__container">
+                     
+                    <span id="amount__earned"></span>
+                </div>
+            </div>
+            <div id="available" class="number">
+                <small>Money Available</small>
+                <div class="amount__container">
+                     
+                    <span id="amount__available"></span>
+                </div>
+            </div>
+            <div id="spent" class="number">
+                <small>Money Spent</small>
+                <div class="amount__container">
+                  
+                    <span id="amount__spent"></span>
+                </div>
+            </div>
+        </div>
+        <div class="input__area">
+            <input type="text" id="description" placeholder="Description">
+            <input type="number" id="amount" placeholder="Amount">
+        </div>
+        <div class="buttons__area">
+            <button id="add__income">Add Income</button>
+            <button id="add__expense">Add Expense</button>
+        </div>
+        <div class="items__container">
+            <div id="income__container" class="container">
+                <h2>Income</h2>
+                <!-- <div class="item income">
+                    <h4>Stuff sold</h4>
+                    <div class="item__income">
+                        <p class="symbol">$</p>
+                        <span class="income__amount">200</span>
+                    </div>
+                    <i class="far fa-trash-alt"></i>
+                </div> -->
+            </div>
+            <div id="expenses__container" class="container">
+                <h2>Expenses</h2>
+                <!-- <div class="item expense">
+                    <h4>Stuff bought</h4>
+                    <div class="item__expense">
+                        <p class="symbol">$</p>
+                        <span class="expense__amount">200</span>
+                    </div>
+                    <i class="far fa-trash-alt"></i>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="sd.js">
+
+    </script>
+</body>
+</html>
